@@ -20,6 +20,7 @@
             <textarea id="course_urls" placeholder="课程链接，每行一个&#10;https://studyh5.zhihuishu.com/..." rows="3" required></textarea>
             <div class="form-row">
                 <label>倍速 <input type="number" id="speed" value="1.5" min="0.5" max="1.8" step="0.1"></label>
+                <label>每课时长/min <input type="number" id="limit_max_time" value="0" min="0" step="1" title="0=不限制"></label>
                 <label><input type="checkbox" id="enable_auto_captcha" checked> 自动过滑块</label>
                 <label><input type="checkbox" id="enable_vlm" onchange="document.querySelector('.vlm-row').classList.toggle('hidden',!this.checked)"> VLM 验证码</label>
             </div>

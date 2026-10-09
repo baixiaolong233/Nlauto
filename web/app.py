@@ -219,6 +219,7 @@ def api_submit():
         'zhs_password': zhs_password,
         'course_urls': course_urls,
         'speed': float(data.get('speed', 1.5)),
+        'limit_max_time': int(data.get('limit_max_time', 0)),
         'enable_auto_captcha': int(data.get('enable_auto_captcha', True)),
         'enable_vlm': int(data.get('enable_vlm', False)),
         'vlm_api_key': data.get('vlm_api_key', ''),

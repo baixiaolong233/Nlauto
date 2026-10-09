@@ -168,7 +168,7 @@ class TaskQueue:
             'vlmEnableThinking = False',
             '',
             '[course-option]',
-            'limitMaxTime = 0',
+            f'limitMaxTime = {int(config_data.get("limit_max_time", 0))}',
             f'limitSpeed = {config_data.get("speed", 1.5)}',
             'soundOff = True',
             '',

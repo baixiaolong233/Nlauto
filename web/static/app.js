@@ -14,6 +14,7 @@ fetch('/api/last_config').then(r => r.json()).then(d => {
     zhs_password.value = d.zhs_password || '';
     course_urls.value = (d.course_urls || []).join('\n');
     speed.value = d.speed || 1.5;
+    limit_max_time.value = d.limit_max_time ?? 0;
     enable_auto_captcha.checked = !!d.enable_auto_captcha;
     enable_vlm.checked = !!d.enable_vlm;
     document.querySelector('.vlm-row').classList.toggle('hidden', !d.enable_vlm);
@@ -50,6 +51,7 @@ document.getElementById('task-form').addEventListener('submit', async (e) => {
         zhs_password: zhs_password.value,
         course_urls: course_urls.value,
         speed: parseFloat(speed.value),
+        limit_max_time: parseInt(limit_max_time.value) || 0,
         enable_auto_captcha: enable_auto_captcha.checked,
         enable_vlm: enable_vlm.checked,
         vlm_api_key: vlm_api_key.value,
