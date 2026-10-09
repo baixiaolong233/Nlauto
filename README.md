@@ -2,24 +2,17 @@
 
 **Github项目主页：**[CXRunfree/Autovisor](https://github.com/CXRunfree/Autovisor)
 
-------
-#### 2026/9/15 公告
 
-感谢大家三年多以来的喜爱与支持~
 
-准备读研, 本项目佛系更新
-
-#### 2026/9/24 Autovisor-3.18.4 更新
+#### 2026/10/9 Autovisor-3.18.4(1 更新
 
 **本次更新:**
 
-- 新增融合共享课支持: 自动跳过 AI 随堂练习弹窗、展开折叠目录、关闭弹窗后恢复播放, 并读取课时真实学习进度 ([#158](https://github.com/CXRunfree/Autovisor/pull/158)).
+- 新增融合共享课支持: 自动跳过人机验证模块，提供部署在unbuntu服务器选择
+- 本次修改为baixiaolong提供
 
-**近期更新:**
 
-- 修复课程页卡死: 已读的"学前必读"弹窗是隐藏节点, 等它可见会一直等下去, 现在超时即跳过 ([#155](https://github.com/CXRunfree/Autovisor/pull/155)).
-- 课时切换、目录识别的等待也加上超时, 异常页面不再长时间卡住.
-- 支持 Python 3.13.
+
 
 #### 💗赞助商
 
@@ -144,15 +137,9 @@ cp config.macos.ini.example config.macos.ini
 ------
 #### 已知问题
 
-- **长时间挂机**有概率弹出人机验证, 程序检测到后会暂停操作, 直到手动验证完成;
 - 浏览器窗口若**最小化**可能导致视频播放进度不增加;
 - 若出现其他异常崩溃, 请提交 issue 并附上报错信息.
 
-#### 写在最后
-
-觉得体验还不错? 请留下你宝贵的 Star ⭐, 并分享给更多有需要的人!
-
-或者为项目发电支持一下~
 
 <p align="left"><img src="resources/markdown/donate.png" width="200" alt="赞赏码"></p>
 
