@@ -33,6 +33,12 @@ info "最大并发: ${MAX_CONCURRENT}"
 
 # --- 1. 安装系统依赖 ---
 info "安装系统依赖..."
+
+while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+    info "等待 dpkg 锁释放（系统自动更新中）..."
+    sleep 5
+done
+
 apt-get update || error "apt-get update 失败，请检查网络/DNS"
 apt-get install -y \
     python3 python3-venv python3-pip \
