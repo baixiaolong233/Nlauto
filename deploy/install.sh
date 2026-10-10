@@ -21,7 +21,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # --- 配置变量 ---
-INSTALL_DIR="/opt/Auto"
+INSTALL_DIR="/opt/Nlauto"
 WEB_DIR="${INSTALL_DIR}/web"
 VENV_DIR="${INSTALL_DIR}/venv"
 VENV_PYTHON="${VENV_DIR}/bin/python"
@@ -35,7 +35,7 @@ info "最大并发: ${MAX_CONCURRENT}"
 # --- 1. 安装系统依赖 ---
 info "安装系统依赖..."
 apt-get update -qq
-apt-get install -y -qq \
+apt-get install -y \
     python3 python3-venv python3-pip \
     xvfb \
     nginx \
@@ -43,8 +43,7 @@ apt-get install -y -qq \
     libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
     libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
     libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2 \
-    libxshmfence1 libxfixes3 \
-    > /dev/null 2>&1
+    libxshmfence1 libxfixes3
 
 info "系统依赖安装完成"
 
