@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # ============ Autovisor Web 一键部署脚本 ============
 # 适用系统: Ubuntu 22.04 / 24.04 LTS (x86_64)
@@ -34,7 +33,7 @@ info "最大并发: ${MAX_CONCURRENT}"
 
 # --- 1. 安装系统依赖 ---
 info "安装系统依赖..."
-apt-get update -qq
+apt-get update || error "apt-get update 失败，请检查网络/DNS"
 apt-get install -y \
     python3 python3-venv python3-pip \
     xvfb \
@@ -43,7 +42,8 @@ apt-get install -y \
     libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
     libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
     libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2 \
-    libxshmfence1 libxfixes3
+    libxshmfence1 libxfixes3 \
+    || error "apt-get install 失败，请看上面的错误信息"
 
 info "系统依赖安装完成"
 
