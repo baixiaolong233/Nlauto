@@ -89,13 +89,21 @@ function showLog(taskId) {
     currentLogTask = taskId;
     logTaskId.textContent = '#' + taskId;
     logOutput.innerHTML = '';
-    fetch(`/api/tasks`).then(r => r.json()).then(d => {
-        const t = d.tasks.find(x => x.id === taskId);
-        if (!t) return;
-        const div = document.createElement('div');
-        div.className = 'log-line';
-        div.textContent = `[${t.status}] ${t.zhs_username} | 倍速 ${t.speed}`;
-        logOutput.appendChild(div);
+    fetch(`/api/log/${taskId}`).then(r => r.json()).then(d => {
+        if (d.lines && d.lines.length) {
+            for (const line of d.lines) {
+                const div = document.createElement('div');
+                div.className = 'log-line';
+                div.textContent = line;
+                logOutput.appendChild(div);
+            }
+            logOutput.scrollTop = logOutput.scrollHeight;
+        } else {
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            div.textContent = `[${d.status || 'unknown'}] 暂无日志`;
+            logOutput.appendChild(div);
+        }
     });
 }
 
@@ -110,5 +118,13 @@ function cancelTask(taskId) {
             const cancelBtn = row.querySelector('.btn-danger');
             if (cancelBtn) cancelBtn.remove();
         }
+    });
+}
+
+function cleanupTasks() {
+    if (!confirm('确认清理所有已完成/失败的任务？')) return;
+    fetch('/api/cleanup', { method: 'POST' }).then(r => r.json()).then(d => {
+        alert(`已清理 ${d.deleted} 个任务`);
+        location.reload();
     });
 }

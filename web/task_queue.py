@@ -129,6 +129,11 @@ class TaskQueue:
                 config_path.unlink()
             except OSError:
                 pass
+            if status == 'done':
+                try:
+                    log_path.unlink()
+                except OSError:
+                    pass
 
         self._update_db_status(task_id, status)
         self.socketio.emit(

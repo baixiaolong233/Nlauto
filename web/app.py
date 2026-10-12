@@ -274,6 +274,52 @@ def api_last_config():
     return jsonify({})
 
 
+@app.route('/api/cleanup', methods=['POST'])
+@login_required
+def api_cleanup():
+    user = current_user()
+    db = get_db()
+    rows = db.execute(
+        "SELECT id, log_path FROM tasks WHERE user_id=? AND status IN ('done','failed')",
+        (user['id'],),
+    ).fetchall()
+    for row in rows:
+        if row['log_path']:
+            try:
+                Path(row['log_path']).unlink()
+            except OSError:
+                pass
+    db.execute(
+        "DELETE FROM tasks WHERE user_id=? AND status IN ('done','failed')",
+        (user['id'],),
+    )
+    db.commit()
+    db.close()
+    return jsonify({'deleted': len(rows)})
+
+
+@app.route('/api/log/<task_id>')
+@login_required
+def api_log(task_id):
+    user = current_user()
+    db = get_db()
+    row = db.execute(
+        'SELECT * FROM tasks WHERE id=? AND user_id=?',
+        (task_id, user['id']),
+    ).fetchone()
+    db.close()
+    if not row:
+        return jsonify({'error': '任务不存在'}), 404
+    lines = []
+    if row['log_path']:
+        try:
+            with open(row['log_path'], 'r', encoding='utf-8', errors='replace') as f:
+                lines = f.read().splitlines()
+        except OSError:
+            pass
+    return jsonify({'task_id': task_id, 'status': row['status'], 'lines': lines})
+
+
 @socketio.on('connect')
 def on_connect():
     pass
