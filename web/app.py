@@ -192,14 +192,15 @@ def api_submit():
 
     course_urls = [u.strip() for u in course_urls_raw.replace(',', '\n').split('\n') if u.strip()]
     task_id = str(uuid.uuid4())[:8]
+    log_path = str(LOG_DIR / f'web_{task_id}.txt')
 
     db = get_db()
     db.execute(
         """INSERT INTO tasks
            (id, user_id, zhs_username, zhs_password, course_urls, speed,
             enable_auto_captcha, enable_vlm, vlm_api_key, vlm_model, vlm_base_url,
-            status, created_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'queued', ?)""",
+            status, created_at, log_path)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'queued', ?, ?)""",
         (
             task_id, user['id'], zhs_username, zhs_password, json.dumps(course_urls),
             float(data.get('speed', 1.5)),
@@ -209,6 +210,7 @@ def api_submit():
             data.get('vlm_model', ''),
             data.get('vlm_base_url', ''),
             datetime.now().isoformat(),
+            log_path,
         ),
     )
     db.commit()
