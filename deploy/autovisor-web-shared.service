@@ -1,0 +1,17 @@
+[Unit]
+Description=Autovisor Web Service (Shared Browser Mode)
+After=chromium-shared.service xvfb.service network.target
+Requires=chromium-shared.service xvfb.service
+
+[Service]
+WorkingDirectory=/opt/Nlauto/web_shared
+Environment=DISPLAY=:99
+Environment=MAX_CONCURRENT=10
+Environment=SECRET_KEY=change-me
+Environment=AUTOVISOR_CDP_URL=http://localhost:9222
+ExecStart=/opt/Nlauto/venv/bin/python app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
