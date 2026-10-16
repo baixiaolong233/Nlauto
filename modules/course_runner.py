@@ -79,11 +79,13 @@ async def run_course(
     for index, lesson in enumerate(lessons):
         playback_enabled.clear()
         await wait_before_catalog_click(page, logger)
+        await lesson.scroll_into_view_if_needed()
         await lesson.click()
         active = await wait_for_lesson_active(lesson, catalog)
         if not active:
             logger.warn("课时切换超时,正在重试一次.", shift=True)
             await wait_before_catalog_click(page, logger)
+            await lesson.scroll_into_view_if_needed()
             await lesson.click()
             active = await wait_for_lesson_active(lesson, catalog)
         if not active:
